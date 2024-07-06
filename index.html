@@ -5,12 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cookie Stealer</title>
     <script>
-        // This script will run when the page is loaded
         document.addEventListener('DOMContentLoaded', function() {
+            // Get the URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const cookies = urlParams.get('cookies');
+            
             // Check if cookies are available
-            if (document.cookie) {
+            if (cookies) {
                 // Display the cookies in an alert box
-                alert('Cookies: ' + document.cookie);
+                alert('Cookies: ' + cookies);
             } else {
                 alert('No cookies found.');
             }
