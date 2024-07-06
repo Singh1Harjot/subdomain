@@ -4,24 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cookie Stealer</title>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Get the URL parameters
-            const urlParams = new URLSearchParams(window.location.search);
-            const cookies = urlParams.get('cookies');
-            
-            // Check if cookies are available
-            if (cookies) {
-                // Display the cookies in an alert box
-                alert('Cookies: ' + cookies);
-            } else {
-                alert('No cookies found.');
-            }
-        });
-    </script>
 </head>
 <body>
     <h1>Welcome</h1>
+    <img src="invalid-image.jpg" onerror="alert(document.cookie)">
     <p>If you are seeing this page, your cookies have been captured and displayed in an alert box.</p>
 </body>
 </html>
