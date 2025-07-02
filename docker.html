@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Ultimate Dork Suite</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #2a2a2a;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+        h1 {
+            text-align: center;
+            color: #00ff88;
+            text-shadow: 0 0 5px #00ff88;
+        }
+        .input-group, .controls {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        input, select, button {
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            background-color: #3a3a3a;
+            color: #e0e0e0;
+        }
+        input:focus, select:focus {
+            outline: none;
+            box-shadow: 0 0 5px #00ff88;
+        }
+        button {
+            background-color: #00ff88;
+            color: #1a1a1a;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #00cc66;
+        }
+        .category {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #3a3a3a;
+            border-radius: 4px;
+        }
+        .category h3 {
+            margin-top: 0;
+            color: #00ff88;
+        }
+        .dork {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #4a4a4a;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        .dork-text {
+            flex-grow: 1;
+            word-break: break-all;
+        }
+        .dork-actions {
+            display: flex;
+            gap: 10px;
+        }
+        @media (max-width: 600px) {
+            .input-group, .controls {
+                flex-direction: column;
+            }
+            .dork {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .dork-actions {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Super Ultimate Dork Suite</h1>
+        <div class="input-group">
+            <select id="searchEngine">
+                <option value="https://www.google.com/search?q=">Google</option>
+                <option value="https://www.bing.com/search?q=">Bing</option>
+                <option value="https://duckduckgo.com/?q=">DuckDuckGo</option>
+                <option value="https://search.yahoo.com/search?p=">Yahoo</option>
+                <option value="https://www.baidu.com/s?wd=">Baidu</option>
+                <option value="https://yandex.com/search/?text=">Yandex</option>
+                <option value="https://search.brave.com/search?q=">Brave Search</option>
+                <option value="https://www.startpage.com/do/search?q=">Startpage</option>
+                <option value="https://searxng.org/search?q=">SearXNG</option>
+                <option value="https://www.ecosia.org/search?q=">Ecosia</option>
+                <option value="https://search.naver.com/search.naver?query=">Naver</option>
+                <option value="https://search.seznam.cz/?q=">Seznam</option>
+                <option value="https://www.qwant.com/?q=">Qwant</option>
+                <option value="https://swisscows.com/en/web?query=">Swisscows</option>
+                <option value="https://www.mojeek.com/search?q=">Mojeek</option>
+                <option value="https://gibiru.com/results.html?q=">Gibiru</option>
+                <option value="https://search.aol.com/aol/search?q=">AOL Search</option>
+                <option value="https://www.ask.com/web?q=">Ask.com</option>
+            </select>
+            <input type="text" id="domain" placeholder="Enter domain (e.g., example.com)">
+            <button onclick="generateDorks()">Generate Dorks</button>
+        </div>
+        <div class="controls">
+            <button onclick="exportDorks()">Export Dorks</button>
+        </div>
+        <div id="dorks"></div>
+    </div>
+    <script>
+        const dorks = {
+            "Secrets & Credentials": [
+                "inurl:.env", "inurl:.env.bak", "inurl:/.env", "inurl:config.js intext:\"key\"", "intext:API_KEY",
+                "inurl:.npmrc", "inurl:.bash_history", "filetype:json intext:secret", "intext:\"access_token\"",
+                "filetype:env intext:\"DB_PASSWORD\"", "filetype:log intext:password", "inurl:.aws/credentials",
+                "inurl:.dockerignore", "intext:\"PRIVATE_KEY\"", "filetype:yml intext:\"api_token\"",
+                "inurl:secrets.yml", "inurl:.htpasswd", "intext:\"client_secret\"", "filetype:conf intext:\"password\"",
+                "inurl:config.yaml intext:\"key\"", "inurl:.gitignore intext:\"secret\"", "inurl:.bashrc intext:\"token\"",
+                "inurl:.zshrc intext:\"key\"", "filetype:sh intext:\"password\"", "inurl:credentials.json",
+                "inurl:.azure/credentials", "intext:\"bearer token\"", "inurl:api_keys.yml",
+                "filetype:properties intext:\"password\"", "inurl:.gcloud/credentials", "inurl:.ssh/id_rsa",
+                "inurl:.ssh/authorized_keys", "intext:\"service_account_key\"", "inurl:token.txt",
+                "filetype:log intext:\"auth_token\"", "inurl:.netrc", "intext:\"db_user\"", "intext:\"db_pass\"",
+                "inurl:config.ini intext:\"key\"", "inurl:.travis.yml intext:\"secret\"", "inurl:.git-credentials",
+                "intext:\"aws_access_key_id\"", "intext:\"aws_secret_access_key\"", "inurl:.kubeconfig",
+                "inurl:.docker/config.json", "inurl:.env.production", "inurl:.env.development",
+                "intext:\"secret_key_base\"", "inurl:.env.test", "inurl:credentials.yml",
+                "inurl:.aws/config", "inurl:.gcp/credentials.json", "inurl:.firebase/adminsdk.json",
+                "intext:\"mongodb://\"", "intext:\"redis://\"", "intext:\"postgres://\"", "inurl:.env.backup",
+                "inurl:.heroku/config", "inurl:.vercel/project.json", "inurl:.netlify/config",
+                "inurl:.vault/config", "inurl:.secrets.json", "inurl:.keycloak/config", "inurl:.auth0/config"
+            ],
+            "JavaScript Files": [
+                "filetype:js inurl:config", "filetype:js intext:\"api_key\"", "filetype:js intext:\"token\"",
+                "filetype:js intext:\"secret\"", "filetype:js inurl:auth", "filetype:js inurl:api",
+                "filetype:js intext:\"endpoint\"", "filetype:js inurl:settings", "filetype:js inurl:constants",
+                "filetype:js inurl:config.js", "filetype:js inurl:app.js", "filetype:js inurl:main.js",
+                "filetype:js inurl:utils.js", "filetype:js intext:\"access_token\"", "filetype:js intext:\"bearer\"",
+                "filetype:js inurl:env.js", "filetype:js inurl:secrets.js", "filetype:js inurl:keys.js",
+                "filetype:js intext:\"aws_access_key\"", "filetype:js inurl:firebase", "filetype:js intext:\"firebase\"",
+                "filetype:js inurl:stripe", "filetype:js inurl:endpoint", "filetype:js inurl:graphql",
+                "filetype:js inurl:rest", "filetype:js inurl:admin", "filetype:js inurl:dashboard",
+                "filetype:js inurl:internal", "filetype:js inurl:private", "filetype:js intext:\"debug\"",
+                "filetype:js inurl:test.js", "filetype:js inurl:dev.js", "filetype:js inurl:staging.js",
+                "filetype:js inurl:prod.js", "filetype:js inurl:legacy", "filetype:js inurl:vendor",
+                "filetype:js inurl:debug.js", "filetype:js inurl:analytics.js", "filetype:js inurl:lib.js",
+                "filetype:js inurl:auth.js", "filetype:js inurl:login.js", "filetype:js inurl:api-client.js",
+                "filetype:js intext:\"client_id\"", "filetype:js inurl:config.prod.js", "filetype:js inurl:env.dev.js"
+            ],
+            "Wayback Machine & Historical Data": [
+                "inurl:archive.org intext:\"*.js\"", "inurl:archive.org inurl:api", "inurl:archive.org inurl:config",
+                "inurl:archive.org intext:\"api_key\"", "inurl:archive.org intext:\"token\"", "inurl:archive.org inurl:.env",
+                "inurl:archive.org inurl:credentials", "inurl:archive.org intext:\"secret\"", "inurl:archive.org inurl:admin",
+                "inurl:archive.org inurl:graphql", "inurl:archive.org inurl:rest", "inurl:archive.org inurl:swagger",
+                "inurl:archive.org intext:\"endpoint\"", "inurl:archive.org inurl:config.js", "inurl:archive.org inurl:app.js",
+                "inurl:archive.org intext:\"access_token\"", "inurl:archive.org inurl:backup", "inurl:archive.org inurl:sql",
+                "inurl:archive.org inurl:.git", "inurl:archive.org inurl:.svn", "inurl:archive.org inurl:.DS_Store",
+                "inurl:archive.org inurl:wp-config", "inurl:archive.org inurl:config.php", "inurl:archive.org intext:\"password\"",
+                "inurl:archive.org inurl:api/v1", "inurl:archive.org inurl:api/v2", "inurl:archive.org inurl:api/docs",
+                "inurl:archive.org inurl:api/endpoint", "inurl:archive.org inurl:api/private", "inurl:archive.org inurl:api/internal"
+            ],
+            "GraphQL Endpoints": [
+                "inurl:graphql", "inurl:/api/graphql", "inurl:/gql", "inurl:/graphiql", "intext:\"GraphQL Playground\"",
+                "inurl:/playground", "inurl:/graphql/schema", "intext:\"GraphQL API\"", "inurl:/graphql-explorer",
+                "inurl:/altair", "intext:\"query { __schema\"", "inurl:/graphql/console", "filetype:graphql",
+                "inurl:/graphql.php", "intext:\"Introspection Query\"", "inurl:/graphql/v1", "inurl:/graphql/v2",
+                "inurl:/graph", "inurl:/api/gql", "inurl:/graphql-api", "inurl:/schema.graphql",
+                "inurl:/graphql-dev", "inurl:/graphql-test", "inurl:/gql-playground", "inurl:/graphql/internal"
+            ],
+            "Admin & Control Panels": [
+                "inurl:admin", "inurl:dashboard", "inurl:cpanel", "inurl:wp-admin", "inurl:login",
+                "inurl:manager", "inurl:controlpanel", "inurl:adminer", "inurl:phpmyadmin", "inurl:webadmin",
+                "inurl:adm", "inurl:backend", "inurl:admin/login", "inurl:panel", "inurl:manage",
+                "inurl:sysadmin", "inurl:server-admin", "inurl:adminpanel", "inurl:login.php",
+                "inurl:admin/index", "inurl:admin_area", "inurl:moderator", "inurl:superadmin",
+                "inurl:admin-console", "inurl:admin_portal", "inurl:admincp", "inurl:webpanel",
+                "inurl:admin-tools", "inurl:admin/auth", "inurl:admin/secure", "inurl:admin/internal",
+                "inurl:/manager/html", "intext:\"Apache Tomcat\" inurl:/manager", "inurl:/host-manager/html"
+            ],
+            "File Uploads": [
+                "inurl:upload", "inurl:file_upload", "intext:\"choose file\"", "inurl:/admin/upload",
+                "filetype:php inurl:upload", "inurl:uploads/", "inurl:filemanager", "intext:\"drag and drop to upload\"",
+                "inurl:/media/upload", "filetype:asp inurl:upload", "inurl:/uploadify", "inurl:/file-upload",
+                "inurl:upload_file", "inurl:/files/upload", "inurl:/image/upload", "inurl:upload.aspx",
+                "inurl:/admin/file-upload", "inurl:/upload-handler", "inurl:/file-uploader", "inurl:/upload/api"
+            ],
+            "Backups & Archives": [
+                "filetype:zip inurl:backup", "filetype:sql inurl:dump", "filetype:bak", "filetype:tar.gz",
+                "intitle:\"index of\" backup", "inurl:wp-config.php.bak", "filetype:7z inurl:backup",
+                "filetype:rar inurl:archive", "inurl:backup.sql", "inurl:database.bak", "inurl:backup.tar",
+                "filetype:db inurl:backup", "inurl:wp-content/uploads/backup", "filetype:gz inurl:backup",
+                "inurl:db_backup", "inurl:sql_dump", "inurl:backup.zip", "inurl:backup_*.sql",
+                "inurl:backup_*.zip", "inurl:export.sql", "inurl:backup_*.tar", "inurl:backup_*.gz"
+            ],
+            "Rare & Forgotten Files": [
+                "inurl:.git/config", "inurl:.svn/entries", "inurl:.DS_Store", "filetype:rdp", "filetype:ovpn",
+                "inurl:.kube/config", "filetype:pem", "filetype:jks", "filetype:key", "inurl:.hg/branch",
+                "inurl:.bzr/", "filetype:sqlite", "inurl:.idea/", "inurl:composer.lock", "filetype:pub inurl:ssh",
+                "inurl:.vscode/settings.json", "filetype:ini inurl:debug", "inurl:.git/HEAD", "inurl:.git/logs",
+                "inurl:.svn/wc.db", "filetype:cer", "inurl:.npmignore", "inurl:.dockerfile", "inurl:.editorconfig",
+                "inurl:.mysql_history", "inurl:.psql_history", "inurl:.gitattributes", "inurl:.gitmodules"
+            ],
+            "APIs & Endpoints": [
+                "inurl:/api/v1", "inurl:/api/v2", "inurl:/rest/", "inurl:/swagger.json", "inurl:/openapi.yaml",
+                "intext:\"API Documentation\"", "inurl:/api/docs", "inurl:/api/key", "filetype:json inurl:endpoint",
+                "inurl:/api/public", "inurl:/api/test", "inurl:/api/health", "inurl:/api/v3", "inurl:/api/auth",
+                "inurl:/api/config", "inurl:/api/ping", "inurl:/api/status", "inurl:/api/version",
+                "inurl:/api/explorer", "inurl:/api/swagger", "inurl:/api/info", "inurl:/api/monitor",
+                "inurl:/api/debug", "inurl:/api/endpoint", "inurl:/api/probe", "inurl:/api/internal",
+                "inurl:/api/private", "inurl:/api/hidden", "inurl:/api/legacy", "inurl:/api/dev",
+                "inurl:/actuator", "inurl:/metrics intext:\"prometheus\"", "inurl:/debug/pprof", "inurl:/trace"
+            ],
+            "Sensitive Files": [
+                "filetype:pdf intext:confidential", "filetype:docx intext:password", "filetype:xls intext:credentials",
+                "inurl:robots.txt", "inurl:sitemap.xml", "filetype:txt intext:\"admin\"", "inurl:config.php",
+                "inurl:settings.php", "inurl:database.php", "filetype:inc inurl:db", "filetype:doc intext:internal",
+                "inurl:readme.md", "inurl:changelog.txt", "inurl:install.php", "filetype:log intext:\"error\"",
+                "inurl:debug.txt", "inurl:access.log", "inurl:error.log", "inurl:wp-config.php",
+                "inurl:configuration.php", "filetype:xml intext:password", "filetype:csv intext:password",
+                "inurl:backup_config.php", "inurl:config.bak", "inurl:settings.bak", "inurl:database.bak",
+                "inurl:config.inc", "inurl:secrets.txt", "inurl:credentials.csv", "inurl:config.json"
+            ],
+            "Misconfigurations": [
+                "intitle:\"index of\" inurl:etc", "inurl:.htaccess", "intext:\"Directory Listing Enabled\"",
+                "inurl:crossdomain.xml", "inurl:clientaccesspolicy.xml", "inurl:phpinfo.php",
+                "intext:\"error_log\"", "inurl:test.php intitle:\"phpinfo\"", "inurl:/debug.log",
+                "inurl:server-status", "inurl:server-info", "inurl:env.php", "inurl:info.php",
+                "inurl:config.inc.php", "inurl:db.ini", "inurl:.htaccess.bak", "inurl:php.ini",
+                "inurl:web.config", "inurl:debug.php", "inurl:trace.axd", "inurl:elmah.axd",
+                "filetype:log intext:\"exception\" intext:\"trace\"", "inurl:/jenkins/login", "inurl:/mongo-express"
+            ],
+            "Cloud & Storage": [
+                "inurl:s3.amazonaws.com", "inurl:blob.core.windows.net", "inurl:storage.googleapis.com",
+                "intext:\"bucket\"", "inurl:/files/ intitle:\"index of\"", "inurl:firebaseio.com/.json",
+                "inurl:cloudfront.net intext:\"secret\"", "inurl:*.s3.*.amazonaws.com", "inurl:*.blob.*.windows.net",
+                "inurl:*.storage.*.googleapis.com", "inurl:*.digitaloceanspaces.com", "inurl:*.wasabisys.com",
+                "inurl:*.firebaseapp.com/.json", "inurl:*.dropbox.com/s/", "inurl:/s3.*.amazonaws.com"
+            ],
+            "Open Redirects": [
+                "inurl:redirect=", "inurl:goto=", "inurl:url=", "inurl:next=", "inurl:dest=",
+                "inurl:redirect_uri=", "inurl:forward=", "inurl:go=", "inurl:continue=", "inurl:target=",
+                "inurl:r=", "inurl:to=", "inurl:out=", "inurl:view=", "inurl:redirectUrl=", "inurl:ret=",
+                "inurl:back=", "inurl:redirect_to=", "inurl:location=", "inurl:redirect.php", "inurl:goto.php"
+            ],
+            "Directory Listings": [
+                "intitle:\"index of\"", "intitle:\"index of\" inurl:uploads", "intitle:\"index of\" inurl:files",
+                "intitle:\"index of\" inurl:backup", "intitle:\"index of\" inurl:admin", "intitle:\"index of\" inurl:etc",
+                "intitle:\"index of\" inurl:config", "intitle:\"index of\" inurl:db", "intitle:\"index of\" inurl:logs",
+                "intitle:\"index of\" parent directory", "intitle:\"index of\" inurl:private", "intitle:\"index of\" inurl:secure"
+            ],
+            "XSS & Injection Points": [
+                "inurl:q=", "inurl:search=", "inurl:query=", "inurl:s=", "inurl:keyword=",
+                "inurl:id=", "inurl:cat=", "inurl:page=", "inurl:tag=", "inurl:name=",
+                "inurl:comment=", "inurl:message=", "inurl:text=", "inurl:input=",
+                "inurl:username=", "inurl:email=", "inurl:phone=", "inurl:title="
+            ],
+            "SQL Injection & Database": [
+                "inurl:.php?id=", "inurl:.asp?id=", "inurl:.jsp?id=", "inurl:.aspx?id=",
+                "inurl:index.php?cat=", "inurl:page.php?pid=", "inurl:article?id=",
+                "inurl:view.php?id=", "inurl:detail.php?id=", "inurl:product.php?id=",
+                "inurl:db_connect.php", "inurl:db_config.php", "inurl:database.sql"
+            ],
+            "LFI & RFI": [
+                "inurl:include=", "inurl:file=", "inurl:path=", "inurl:inc=", "inurl:load=",
+                "inurl:page=../../", "inurl:file=../../", "inurl:dir=../../",
+                "inurl:include.php?file=", "inurl:index.php?page=", "inurl:main.php?inc="
+            ],
+            "SSRF & Internal Access": [
+                "inurl:proxy=", "inurl:fetch=", "inurl:request=", "inurl:callback=",
+                "inurl:ping=", "inurl:check=", "inurl:probe=", "inurl:connect=",
+                "inurl:api?url=", "inurl:webhook=", "inurl:notify=", "inurl:relay="
+            ],
+            "Framework-Specific": [
+                "inurl:laravel.log", "inurl:.env laravel", "inurl:config/database.php laravel",
+                "inurl:wp-includes/", "inurl:wp-content/plugins/", "inurl:wp-config.php",
+                "inurl:django/settings.py", "inurl:rails/config/database.yml",
+                "inurl:application.yml spring", "inurl:joomla.xml", "inurl:drupal/sites/default/settings.php",
+                "inurl:magento/app/etc/env.php", "inurl:shopify/settings_data.json",
+                "intext:\"Django Debug\"", "intext:\"Traceback (most recent call last)\" inurl:django",
+                "intext:\"Django Version\" intext:\"DEBUG is set to True\"",
+                "intext:\"Laravel Exception\"", "intext:\"Whoops, looks like something went wrong\" inurl:laravel",
+                "intext:\"Illuminate\\Foundation\\Bootstrap\" intext:\"exception\""
+            ],
+            "Test & Development": [
+                "inurl:/test/", "inurl:/dev/", "inurl:/staging/", "inurl:/beta/",
+                "inurl:/sandbox/", "inurl:/demo/", "inurl:/qa/", "inurl:/uat/",
+                "inurl:test.php", "inurl:dev.php", "inurl:staging.php", "inurl:beta.php",
+                "inurl:debug=true", "inurl:env=dev", "inurl:mode=debug"
+            ],
+            "CORS Misconfigurations": [
+                "inurl:crossdomain.xml", "inurl:clientaccesspolicy.xml", "intext:\"Access-Control-Allow-Origin: *\"",
+                "inurl:api intext:\"Access-Control-Allow-Origin\"", "inurl:cors", "inurl:cors.json",
+                "intext:\"Access-Control-Allow-Credentials: true\"", "intext:\"Access-Control-Allow-Methods: *\""
+            ],
+            "Remote Code Execution (RCE)": [
+                "inurl:exec=", "inurl:cmd=", "inurl:command=", "inurl:run=",
+                "inurl:shell=", "inurl:execute=", "inurl:script=", "inurl:code=",
+                "inurl:php?exec=", "inurl:asp?exec=", "inurl:jsp?exec="
+            ],
+            "Insecure Direct Object References (IDOR)": [
+                "inurl:id=", "inurl:uid=", "inurl:user_id=", "inurl:account_id=",
+                "inurl:profile_id=", "inurl:order_id=", "inurl:transaction_id=",
+                "inurl:doc_id=", "inurl:file_id=", "inurl:resource_id="
+            ],
+            "Pastebin & Data Leaks": [
+                "site:pastebin.com", "site:pastebin.com intext:\"password\"", "site:pastebin.com intext:\"api_key\"",
+                "site:pastebin.com intext:\"credentials\"", "site:pastebin.com intext:\"config\"",
+                "site:pastebin.com intext:\"token\"", "site:pastebin.com intext:\"database\""
+            ],
+            "Google Groups & Discussions": [
+                "from:groups.google.com", "from:groups.google.com intext:\"password\"",
+                "from:groups.google.com intext:\"api_key\"", "from:groups.google.com intext:\"credentials\"",
+                "from:groups.google.com intext:\"config\"", "from:groups.google.com intext:\"token\"",
+                "from:groups.google.com intext:\"database\""
+            ],
+            "Google Drive & Docs": [
+                "site:*.google.com/drive", "site:*.google.com/drive intext:\"password\"",
+                "site:*.google.com/drive intext:\"api_key\"", "site:*.google.com/drive intext:\"credentials\"",
+                "site:*.google.com/drive intext:\"config\"", "site:docs.google.com intext:\"email\"",
+                "site:docs.google.com intext:\"token\""
+            ],
+            "GitHub Leaks": [
+                "site:github.com", "site:github.com intext:\"password\"", "site:github.com intext:\"api_key\"",
+                "site:github.com intext:\"credentials\"", "site:github.com intext:\"config\"",
+                "site:github.com intext:\"email\"", "site:gist.github.com intext:\"token\""
+            ]
+        };
+
+        function generateDorks() {
+            const domain = document.getElementById('domain').value.trim();
+            const searchEngine = document.getElementById('searchEngine').value;
+            const dorksDiv = document.getElementById('dorks');
+            dorksDiv.innerHTML = '';
+
+            if (!domain) {
+                dorksDiv.innerHTML = '<p style="color: #ff5555;">Please enter a domain.</p>';
+                return;
+            }
+
+            Object.entries(dorks).forEach(([category, dorkList]) => {
+                const categoryDiv = document.createElement('div');
+                categoryDiv.className = 'category';
+                const categoryTitle = document.createElement('h3');
+                categoryTitle.textContent = category;
+                categoryDiv.appendChild(categoryTitle);
+
+                dorkList.forEach(dork => {
+                    const dorkDiv = document.createElement('div');
+                    dorkDiv.className = 'dork';
+
+                    let formattedDork;
+                    if (category === 'Pastebin & Data Leaks') {
+                        formattedDork = dork.replace(/site:pastebin\.com/, `site:pastebin.com ${domain}`);
+                    } else if (category === 'Google Groups & Discussions') {
+                        formattedDork = dork.replace(/from:groups\.google\.com/, `from:groups.google.com ${domain}`);
+                    } else if (category === 'Google Drive & Docs') {
+                        formattedDork = dork.replace(/site:\*\.google\.com\/drive|site:docs\.google\.com/, `$& ${domain}`);
+                    } else if (category === 'GitHub Leaks') {
+                        formattedDork = dork.replace(/site:github\.com|site:gist\.github\.com/, `$& ${domain}`);
+                    } else {
+                        formattedDork = `site:${domain} ${dork}`;
+                    }
+
+                    const dorkText = document.createElement('div');
+                    dorkText.className = 'dork-text';
+                    dorkText.textContent = formattedDork;
+
+                    const dorkActions = document.createElement('div');
+                    dorkActions.className = 'dork-actions';
+
+                    const goButton = document.createElement('button');
+                    goButton.textContent = 'Go';
+                    goButton.addEventListener('click', () => {
+                        const encodedDork = encodeURIComponent(formattedDork);
+                        const searchUrl = `${searchEngine}${encodedDork}`;
+                        try {
+                            window.open(searchUrl, '_blank');
+                        } catch (error) {
+                            console.error('Failed to open search:', error);
+                            alert('Error opening search. Please check the domain or try manually.');
+                        }
+                    });
+
+                    const copyButton = document.createElement('button');
+                    copyButton.textContent = 'Copy';
+                    copyButton.addEventListener('click', () => copyDork(formattedDork));
+
+                    dorkActions.appendChild(goButton);
+                    dorkActions.appendChild(copyButton);
+                    dorkDiv.appendChild(dorkText);
+                    dorkDiv.appendChild(dorkActions);
+                    categoryDiv.appendChild(dorkDiv);
+                });
+
+                dorksDiv.appendChild(categoryDiv);
+            });
+        }
+
+        function copyDork(dork) {
+            navigator.clipboard.writeText(dork).then(() => {
+                alert('Dork copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy dork:', err);
+                alert('Failed to copy dork.');
+            });
+        }
+
+        function exportDorks() {
+            const domain = document.getElementById('domain').value.trim();
+            if (!domain) {
+                alert('Please enter a domain to export dorks.');
+                return;
+            }
+
+            let exportText = 'Super Ultimate Dork Suite - Exported Dorks\n\n';
+            Object.entries(dorks).forEach(([category, dorkList]) => {
+                exportText += `${category}\n`;
+                dorkList.forEach(dork => {
+                    let formattedDork;
+                    if (category === 'Pastebin & Data Leaks') {
+                        formattedDork = dork.replace(/site:pastebin\.com/, `site:pastebin.com ${domain}`);
+                    } else if (category === 'Google Groups & Discussions') {
+                        formattedDork = dork.replace(/from:groups\.google\.com/, `from:groups.google.com ${domain}`);
+                    } else if (category === 'Google Drive & Docs') {
+                        formattedDork = dork.replace(/site:\*\.google\.com\/drive|site:docs\.google\.com/, `$& ${domain}`);
+                    } else if (category === 'GitHub Leaks') {
+                        formattedDork = dork.replace(/site:github\.com|site:gist\.github\.com/, `$& ${domain}`);
+                    } else {
+                        formattedDork = `site:${domain} ${dork}`;
+                    }
+                    exportText += `- ${formattedDork}\n`;
+                });
+                exportText += '\n';
+            });
+
+            const blob = new Blob([exportText], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `super_ultimate_dork_suite_${domain}.txt`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
